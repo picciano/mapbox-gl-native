@@ -17,7 +17,6 @@
 }
 
 @property (nonatomic, readwrite) NSDictionary *options;
-@property (nonnull) mbgl::style::CustomVectorSource *rawSource;
 @property (nonatomic, assign) BOOL dataSourceImplementsFeaturesForTile;
 @property (nonatomic, assign) BOOL dataSourceImplementsFeaturesForBounds;
 
@@ -99,22 +98,17 @@
 @implementation MGLComputedShapeSource
 
 - (instancetype)initWithIdentifier:(NSString *)identifier options:(NS_DICTIONARY_OF(MGLShapeSourceOption, id) *)options {
-    if (self = [super initWithIdentifier:identifier]) {
-        _requestQueue = [[NSOperationQueue alloc] init];
-        self.requestQueue.name = [NSString stringWithFormat:@"mgl.MGLComputedShapeSource.%@", identifier];
-        auto geoJSONOptions = MGLGeoJSONOptionsFromDictionary(options);
-        auto source = std::make_unique<mbgl::style::CustomVectorSource>
-        (self.identifier.UTF8String, geoJSONOptions,
-         ^void(const mbgl::CanonicalTileID& tileID, mbgl::style::FetchTileCallback callback)
-         {
-             NSOperation *operation = [[MGLComputedShapeSourceFetchOperation alloc] initForSource:self tile:tileID callback: callback];
-             [self.requestQueue addOperation:operation];
-         });
-
-        _pendingSource = std::move(source);
-        self.rawSource = _pendingSource.get();
-    }
-    return self;
+    _requestQueue = [[NSOperationQueue alloc] init];
+    self.requestQueue.name = [NSString stringWithFormat:@"mgl.MGLComputedShapeSource.%@", identifier];
+    auto geoJSONOptions = MGLGeoJSONOptionsFromDictionary(options);
+    auto source = std::make_unique<mbgl::style::CustomVectorSource>
+    (identifier.UTF8String, geoJSONOptions,
+     ^void(const mbgl::CanonicalTileID& tileID, mbgl::style::FetchTileCallback callback)
+     {
+         NSOperation *operation = [[MGLComputedShapeSourceFetchOperation alloc] initForSource:self tile:tileID callback: callback];
+         [self.requestQueue addOperation:operation];
+     });
+    return self = [super initWithPendingSource:std::move(source)];
 }
 
 - (void)dealloc {
