@@ -111,11 +111,12 @@ private:
     void invokePlacement();
 
     const std::string sourceID;
-
+protected:
+    std::shared_ptr<Mailbox> mailbox;
+private:
     // Used to signal the worker that it should abandon parsing this tile as soon as possible.
     std::atomic<bool> obsolete { false };
 
-    std::shared_ptr<Mailbox> mailbox;
     Actor<GeometryTileWorker> worker;
 
     GlyphManager& glyphManager;

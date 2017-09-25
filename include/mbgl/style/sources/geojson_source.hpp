@@ -11,17 +11,23 @@ class AsyncRequest;
 
 namespace style {
 
-struct GeoJSONOptions {
+struct GeoJSONTileOptions {
     // GeoJSON-VT options
     uint8_t maxzoom = 18;
     uint16_t tileSize = util::tileSize;
     uint16_t buffer = 128;
     double tolerance = 0.375;
+};
 
+struct GeoJSONClusterOptions {
     // Supercluster options
     bool cluster = false;
     uint16_t clusterRadius = 50;
     uint8_t clusterMaxZoom = 17;
+};
+
+struct GeoJSONOptions : public GeoJSONTileOptions, public GeoJSONClusterOptions {
+
 };
 
 class GeoJSONSource : public Source {

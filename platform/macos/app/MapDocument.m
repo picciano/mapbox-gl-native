@@ -1255,6 +1255,7 @@ NS_ARRAY_OF(id <MGLAnnotation>) *MBXFlattenedShapes(NS_ARRAY_OF(id <MGLAnnotatio
         gridSpacing = 20;
     }
 
+    [NSThread sleepForTimeInterval:1.0];
     NSMutableArray <id <MGLFeature>> * features = [NSMutableArray array];
     CLLocationCoordinate2D coords[2];
 
