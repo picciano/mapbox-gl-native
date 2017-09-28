@@ -432,6 +432,17 @@ MGL_EXPORT IB_DESIGNABLE
  */
 - (void)setTargetCoordinate:(CLLocationCoordinate2D)targetCoordinate animated:(BOOL)animated;
 
+/**
+ Creates and destroys the `locationManager` instance as appropriate based upon
+ the value of `showsUserLocation` and whether application is active.
+ 
+ This method does not normally need to be called by the application, but can be
+ overridden to provide an alternate implementation of CLLocationManager to be used
+ for user location and heading updates. This method is also responsible for requesting
+ permission from the user to use location services.
+ */
+- (void)validateLocationServices;
+
 #pragma mark Configuring How the User Interacts with the Map
 
 /**
