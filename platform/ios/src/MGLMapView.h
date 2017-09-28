@@ -281,24 +281,16 @@ MGL_EXPORT IB_DESIGNABLE
  */
 - (IBAction)showAttribution;
 
-/**
- Support for style classes has been removed. This property always returns an empty array.
- */
+// Support for style classes has been removed. This property always returns an empty array.
 @property (nonatomic) NS_ARRAY_OF(NSString *) *styleClasses __attribute__((deprecated("This property is non-functional.")));
 
-/**
- Support for style classes has been removed. This property always returns NO.
- */
+// Support for style classes has been removed. This property always returns NO.
 - (BOOL)hasStyleClass:(NSString *)styleClass __attribute__((deprecated("This method is non-functional.")));
 
-/**
- Support for style classes has been removed. This property is a no-op.
- */
+// Support for style classes has been removed. This property is a no-op.
 - (void)addStyleClass:(NSString *)styleClass __attribute__((deprecated("This method is non-functional.")));
 
-/**
- Support for style classes has been removed. This property is a no-op.
- */
+// Support for style classes has been removed. This property is a no-op.
 - (void)removeStyleClass:(NSString *)styleClass __attribute__((deprecated("This method is non-functional.")));
 
 #pragma mark Displaying the User’s Location
